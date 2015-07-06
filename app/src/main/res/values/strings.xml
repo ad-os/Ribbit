@@ -16,4 +16,13 @@
     <string name="title_activity_sign_up">SignUpActivity</string>
     <string name="email_hint">Email</string>
     <string name="sign_up_button_label">Sign Up</string>
+    <string name="signup_error_title">Oops!</string>
+    <string name="signup_error_message">Please make sure you enter a valid username, password and email address!</string>
+    <string name="login_error_title">Oops!</string>
+    <string name="login_error_message">Please make sure you enter a username and password!</string>
+    <string name="menu_logout_label">Logout</string>
+    <string name="reset_password">Reset Password</string>
+    <string name="email_title">Enter your email.</string>
+    <string name="error_email_title">Oops!</string>
+    <string name="success_message_email">A rest email was sent</string>
 </resources>
