@@ -34,7 +34,6 @@ public class LoginActivity extends AppCompatActivity {
     protected String email;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        //requestWindowFeature(Window.FEATURE_INDETERMINATE_PROGRESS);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
@@ -76,6 +75,7 @@ public class LoginActivity extends AppCompatActivity {
                     dialog.show();
                 } else {
                     mSignUpTextView.setVisibility(View.INVISIBLE);
+                    mResetPasswordView.setVisibility(View.INVISIBLE);
                     mProgressBar.setVisibility(View.VISIBLE);
                     ParseUser.logInInBackground(username, password, new LogInCallback() {
                         @Override
@@ -89,6 +89,7 @@ public class LoginActivity extends AppCompatActivity {
                                 startActivity(intent);
                             } else {
                                 mSignUpTextView.setVisibility(View.VISIBLE);
+                                mResetPasswordView.setVisibility(View.VISIBLE);
                                 AlertDialog.Builder builder = new AlertDialog.Builder(LoginActivity.this);
                                 builder.setTitle(R.string.login_error_title);
                                 builder.setMessage(e.getMessage());
