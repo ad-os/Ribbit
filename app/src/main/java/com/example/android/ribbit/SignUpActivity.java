@@ -21,6 +21,10 @@ public class SignUpActivity extends AppCompatActivity {
     protected EditText mUsername;
     protected EditText mPassword;
     protected EditText mEmail;
+    protected EditText mFirstname;
+    protected EditText mLastname;
+    protected EditText mHometown;
+    protected EditText mWebsite;
     protected Button mSignUpButton;
     protected ProgressBar mProgressBar;
 
@@ -29,17 +33,25 @@ public class SignUpActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sign_up);
 
-        mProgressBar = (ProgressBar) findViewById(R.id.progressBar);
-        mProgressBar.setVisibility(View.INVISIBLE);
+        mFirstname = (EditText) findViewById(R.id.firstnameField);
+        mLastname = (EditText) findViewById(R.id.lastnameField);
+        mHometown = (EditText) findViewById(R.id.hometownField);
+        mWebsite = (EditText) findViewById(R.id.websiteField);
         mUsername = (EditText) findViewById(R.id.usernameField);
         mPassword = (EditText) findViewById(R.id.passwordField);
         mEmail = (EditText) findViewById(R.id.emailField);
         mSignUpButton = (Button) findViewById(R.id.signUpButton);
+        mProgressBar = (ProgressBar) findViewById(R.id.progressBar);
+        mProgressBar.setVisibility(View.INVISIBLE);
 
         mSignUpButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
+                String firstname = mFirstname.getText().toString();
+                String lastname = mLastname.getText().toString();
+                String hometown = mHometown.getText().toString();
+                String website = mWebsite.getText().toString();
                 String username = mUsername.getText().toString();
                 String password = mPassword.getText().toString();
                 String email = mEmail.getText().toString();
@@ -48,7 +60,8 @@ public class SignUpActivity extends AppCompatActivity {
                 password = password.trim();
                 email = email.trim();
 
-                if (username.isEmpty() || password.isEmpty() || email.isEmpty()){
+                if (username.isEmpty() || password.isEmpty() || email.isEmpty() || firstname.isEmpty()
+                        || lastname.isEmpty() || hometown.isEmpty()){
 
                     AlertDialog.Builder builder = new AlertDialog.Builder(SignUpActivity.this);
                     builder.setTitle(R.string.signup_error_title);
@@ -64,6 +77,10 @@ public class SignUpActivity extends AppCompatActivity {
                     newUser.setUsername(username);
                     newUser.setPassword(password);
                     newUser.setEmail(email);
+                    newUser.put("firstname", firstname);
+                    newUser.put("lastname", lastname);
+                    newUser.put("hometown", hometown);
+                    newUser.put("website", website);
                     newUser.signUpInBackground(new SignUpCallback() {
                         @Override
                         public void done(ParseException e) {

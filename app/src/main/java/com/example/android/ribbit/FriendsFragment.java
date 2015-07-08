@@ -1,6 +1,7 @@
 package com.example.android.ribbit;
 
 import android.app.AlertDialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.ListFragment;
 import android.util.Log;
@@ -8,6 +9,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.ListView;
 import android.widget.ProgressBar;
 
 import com.parse.FindCallback;
@@ -28,6 +30,7 @@ public class FriendsFragment extends ListFragment{
     protected ParseUser mCurrentUser;
     protected List<ParseUser> mFriends;
     protected ProgressBar mProgressBar;
+    protected ListView mFriendsListView;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -71,8 +74,13 @@ public class FriendsFragment extends ListFragment{
                             usernames
                     );
                     setListAdapter(adapter);
-                } else {
-                    Log.e(TAG, e.getMessage());
+                }
+                else if(e.getMessage().equals("java.lang.ClassCastException: java.lang.String cannot be cast to org.json.JSONObject")){
+                    //Do nothing since friends are not yet added.
+                    //ignore
+                }
+                else {
+                    //Log.e(TAG, e.getMessage());
                     AlertDialog.Builder builder = new AlertDialog.Builder(getListView().getContext());
                     builder.setTitle(R.string.error_title);
                     builder.setMessage(e.getMessage());
@@ -82,5 +90,13 @@ public class FriendsFragment extends ListFragment{
                 }
             }
         });
+    }
+
+    @Override
+    public void onListItemClick(ListView l, View v, int position, long id) {
+        super.onListItemClick(l, v, position, id);
+        Intent intent = new Intent(getActivity(), Profile.class);
+        intent.putExtra("position", position);
+        startActivity(intent);
     }
 }

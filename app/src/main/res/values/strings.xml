@@ -17,7 +17,7 @@
     <string name="email_hint">Email</string>
     <string name="sign_up_button_label">Sign Up</string>
     <string name="signup_error_title">Oops!</string>
-    <string name="signup_error_message">Please make sure you enter a valid username, password and email address!</string>
+    <string name="signup_error_message">Please make sure you enter all the required fields!</string>
     <string name="login_error_title">Oops!</string>
     <string name="login_error_message">Please make sure you enter a username and password!</string>
     <string name="menu_logout_label">Logout</string>
@@ -30,4 +30,14 @@
     <string name="menu_edit_friends_label">Edit Friends</string>
     <string name="title_activity_edit_friends">Edit Friends</string>
     <string name="error_title">We\'re sorry!</string>
+    <string name="lastname_hint">Lastname</string>
+    <string name="firstname_hint">Firstname</string>
+    <string name="title_activity_profile">Profile</string>
+    <string name="friend_info_title">Friend\'s Info</string>
+    <string name="username_label">Username :</string>
+    <string name="firstname_label">Firstname :</string>
+    <string name="lastname_title">Lastname :</string>
+    <string name="hometown_label">Hometown :</string>
+    <string name="email_label">Email :</string>
+    <string name="wensite_label">Website :</string>
 </resources>
