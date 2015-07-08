@@ -46,6 +46,7 @@ public class MainActivity extends AppCompatActivity implements ActionBar.TabList
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        //If we have a user cached on a disk show the mainActivity else navigate to login.
         ParseUser currentUser = ParseUser.getCurrentUser();
         if (currentUser == null) {
             navigateToLogin();
@@ -113,7 +114,9 @@ public class MainActivity extends AppCompatActivity implements ActionBar.TabList
         if (id == R.id.action_logout) {
             ParseUser.logOut();
             navigateToLogin();
-            return true;
+        } else if (id == R.id.action_edit_friends){
+            Intent intent = new Intent(this, EditFriendsActivity.class);
+            startActivity(intent);
         }
 
         return super.onOptionsItemSelected(item);

@@ -2,18 +2,15 @@
                 xmlns:tools="http://schemas.android.com/tools"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                tools:context=".MainActivity$PlaceholderFragment">
+                tools:context="com.example.android.ribbit.EditFriendsActivity">
+
+    <!--The android list resource id helps the activity to know the list view-->
 
     <ListView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:id="@android:id/list"/>
-    
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@android:id/empty"
-        android:text="@string/empty_friends_label"/>
+        android:id="@android:id/list">
+    </ListView>
 
     <ProgressBar
         android:layout_width="wrap_content"
@@ -21,6 +18,5 @@
         android:id="@+id/progressBar"
         android:layout_centerVertical="true"
         android:layout_centerHorizontal="true"/>
-
 
 </RelativeLayout>
