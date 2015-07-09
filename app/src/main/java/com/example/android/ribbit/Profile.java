@@ -48,8 +48,9 @@ public class Profile extends AppCompatActivity {
         mCurrentUser = ParseUser.getCurrentUser();
         //getting the relations of the current user
         mCurrentUserRelations = mCurrentUser.getRelation(ParseConstants.KEY_FRIENDS_RELATION);
-        //quring the relation
+        //querying the relation
         mParseQuery = mCurrentUserRelations.getQuery();
+        mParseQuery.addAscendingOrder(ParseConstants.KEY_USERNAME);
         mParseQuery.findInBackground(new FindCallback<ParseUser>() {
             @Override
             public void done(List<ParseUser> list, ParseException e) {
