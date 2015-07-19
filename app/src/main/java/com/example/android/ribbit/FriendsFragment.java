@@ -30,7 +30,6 @@ public class FriendsFragment extends ListFragment{
     protected ParseUser mCurrentUser;
     protected List<ParseUser> mFriends;
     protected ProgressBar mProgressBar;
-    protected ListView mFriendsListView;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,

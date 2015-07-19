@@ -92,9 +92,9 @@ public class MainActivity extends AppCompatActivity implements ActionBar.TabList
                 case 1:
                 {
                     //Take video
-                    //create a video to take a intent and return control to the calling application.
+                    //create a Intent to take a video and return control to the calling application.
                     Intent videoIntent = new Intent(MediaStore.ACTION_VIDEO_CAPTURE);
-                    mMediaUri = getOutputMediaFileUri(MEDIA_TYPE_VIDEO);//create a file to save the video.
+                    mMediaUri = getOutputMediaFileUri(MEDIA_TYPE_VIDEO);//create a file to save the video or a Picture
                     if (mMediaUri == null) {
                         //there was an error.
                         Toast.makeText(MainActivity.this,
@@ -250,7 +250,7 @@ public class MainActivity extends AppCompatActivity implements ActionBar.TabList
                     Toast.makeText(this, R.string.general_error, Toast.LENGTH_LONG);
                 }
                 else {
-                    mMediaUri = data.getData();
+                    mMediaUri = data.getData();//get the data the intent is operating on.
                 }
 
                 Log.i(TAG, "MEDIA URI:" + mMediaUri);
@@ -262,11 +262,14 @@ public class MainActivity extends AppCompatActivity implements ActionBar.TabList
                     int fileSize = 0;
                     inputStream = null;
                     try {
+                        //getContentResolver returns a ContentResolver instance for your application's package.
+                        //Content resolver class provides access to the content model.
+                        //A content provider manages access to a central repository of data.
                         inputStream = getContentResolver().openInputStream(mMediaUri);
                         fileSize = inputStream.available();
                     }
                     catch (FileNotFoundException e) {
-                        Toast.makeText(this,getString(R.string.error_opening_file), Toast.LENGTH_LONG);
+                        Toast.makeText(this,getString(R.string.error_opening_file), Toast.LENGTH_LONG).show();
                         return;
                     }
                     catch (IOException e){
@@ -290,9 +293,24 @@ public class MainActivity extends AppCompatActivity implements ActionBar.TabList
             //add to the gallery
             else {
                 Intent mediaScanIntent = new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE);//Implicit intent(Broadcast action)
-                mediaScanIntent.setData(mMediaUri);
+                mediaScanIntent.setData(mMediaUri);//set data this intent will operate on.
                 sendBroadcast(mediaScanIntent);
             }
+
+            Intent recipientIntent = new Intent(this, RecipientsActivity.class);
+            recipientIntent.setData(mMediaUri);//set data this intent is operating on
+
+            String fileType;
+            if (requestCode == TAKE_PHOTO_REQUEST || requestCode == PICK_PHOTO_REQUEST){
+                fileType = ParseConstants.TYPE_IMAGE;
+            } else {
+                fileType = ParseConstants.TYPE_VIDEO;
+            }
+
+            recipientIntent.putExtra(ParseConstants.KEY_FILE_TYPE, fileType);
+
+            startActivity(recipientIntent);
+
         } else if (resultCode != RESULT_CANCELED){
             Toast.makeText(this, R.string.general_error, Toast.LENGTH_LONG).show();
         }
@@ -338,11 +356,15 @@ public class MainActivity extends AppCompatActivity implements ActionBar.TabList
             case R.id.action_camera:
             {
                 AlertDialog.Builder builder = new AlertDialog.Builder(this);
+                //Creating a dialog of choices.
                 builder.setItems(R.array.camera_choices, mDialogListener);
                 AlertDialog dialog = builder.create();
                 dialog.show();
                 break;
             }
+            case R.id.action_sendMessage:
+                Intent intent  = new Intent(this, SendMessage.class);
+                startActivity(intent);
         }
 
         return super.onOptionsItemSelected(item);
