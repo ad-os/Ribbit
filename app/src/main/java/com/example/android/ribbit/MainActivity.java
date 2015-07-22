@@ -7,6 +7,7 @@ import java.io.InputStream;
 import java.net.URI;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.List;
 import java.util.Locale;
 
 import android.app.AlertDialog;
@@ -33,6 +34,10 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.parse.FindCallback;
+import com.parse.ParseException;
+import com.parse.ParseObject;
+import com.parse.ParseQuery;
 import com.parse.ParseUser;
 
 public class MainActivity extends AppCompatActivity implements ActionBar.TabListener {

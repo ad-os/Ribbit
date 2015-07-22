@@ -66,4 +66,6 @@
     <string name="message_error_sending_text">There was an error sending your message.Please try again!</string>
     <string name="title_creating_text_message">We\'re Sorry!</string>
     <string name="message_creating_text_message">There was an error creating the message!</string>
+    <string name="title_activity_view_image">Ribbit</string>
+    <string name="message_time">2 hrs ago</string>
 </resources>
