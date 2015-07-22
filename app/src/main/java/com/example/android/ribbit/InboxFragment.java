@@ -17,6 +17,7 @@ import com.parse.ParseObject;
 import com.parse.ParseQuery;
 import com.parse.ParseUser;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -49,8 +50,14 @@ public class InboxFragment extends ListFragment{
                 if (e == null){
                     //We found messages
                     mMessages = messages;
-                    MessageAdapter adapter = new MessageAdapter(getListView().getContext(), mMessages);
-                    setListAdapter(adapter);
+                    if (getListView().getAdapter() == null) {
+                        MessageAdapter adapter = new MessageAdapter(getListView().getContext(), mMessages);
+                        setListAdapter(adapter);
+                    } else {
+                        //refill the adapter;
+                        //getAdapter returns a basic adapter so we need to cast to uor custom adapter.
+                        ((MessageAdapter)getListView().getAdapter()).refill(mMessages);
+                    }
                 }
             }
         });
@@ -77,6 +84,25 @@ public class InboxFragment extends ListFragment{
             Intent intent = new Intent(Intent.ACTION_VIEW, fileUri);
             intent.setDataAndType(fileUri, "video/*");
             startActivity(intent);
+        }
+
+        //Delete
+        List<String> ids = message.getList(ParseConstants.KEY_RECIPIENT_IDS);
+        if (ids.size() == 1){
+            //last - recipient delete the whole thing
+            message.deleteInBackground();
+        }
+        else {
+            //remove the recipient and save.
+            //removing from local dataBase.
+            ids.remove(ParseUser.getCurrentUser().getObjectId());
+
+            ArrayList<String> idsToRemove  = new ArrayList<String>();
+            idsToRemove.add(ParseUser.getCurrentUser().getObjectId());
+
+            //Removing from parse.
+            message.removeAll(ParseConstants.KEY_RECIPIENT_IDS, idsToRemove);
+            message.saveInBackground();
         }
     }
 }

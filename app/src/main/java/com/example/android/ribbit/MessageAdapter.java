@@ -73,7 +73,6 @@ public class MessageAdapter extends ArrayAdapter<ParseObject> {
         long diffInSeconds = TimeUnit.MILLISECONDS.toSeconds(duration);
         long diffInMinutes = TimeUnit.MILLISECONDS.toMinutes(duration);
         long diffInHours = TimeUnit.MILLISECONDS.toHours(duration);
-        Log.d(TAG, endDate + "");
 
         if (diffInHours > 23) {
             SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MMMM-dd");
@@ -92,5 +91,12 @@ public class MessageAdapter extends ArrayAdapter<ParseObject> {
         ImageView iconImageView;
         TextView nameLabel;
         TextView timeLabel;
+    }
+
+    public void refill(List<ParseObject> messages) {
+        mMessages.clear();
+        mMessages.addAll(messages);
+        //we need to tell the adapter that see our model has been updated so refresh yourself accordingly.
+        notifyDataSetChanged();
     }
 }
