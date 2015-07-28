@@ -11,11 +11,11 @@
     <string name="title_activity_login">LoginActivity</string>
     <string name="username_hint">Username</string>
     <string name="password_hint">Password</string>
-    <string name="login_button">Login</string>
-    <string name="sign_up_text">Sign Up!</string>
+    <string name="login_button">SIGN IN</string>
+    <string name="sign_up_text">Don\'t have an account? Sign Up!</string>
     <string name="title_activity_sign_up">SignUpActivity</string>
     <string name="email_hint">Email</string>
-    <string name="sign_up_button_label">Sign Up</string>
+    <string name="sign_up_button_label">SIGN UP</string>
     <string name="signup_error_title">Oops!</string>
     <string name="signup_error_message">Please make sure you enter all the required fields!</string>
     <string name="login_error_title">Oops!</string>
@@ -68,4 +68,8 @@
     <string name="message_creating_text_message">There was an error creating the message!</string>
     <string name="title_activity_view_image">Ribbit</string>
     <string name="message_time">2 hrs ago</string>
+    <string name="content_description_background">Ribbit frog background image</string>
+    <string name="subtitle">A Treehouse Project</string>
+    <string name="cancel_button_label">CANCEL</string>
+    <string name="content_des_button_divider">Button Divider</string>
 </resources>

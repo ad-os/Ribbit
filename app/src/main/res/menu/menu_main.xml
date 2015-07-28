@@ -14,7 +14,7 @@
 
     <item
         android:id="@+id/action_camera"
-        android:icon="@drawable/ic_action_camera"
+        android:icon="@drawable/ic_menu_camera"
         android:title="@string/menu_camera_label"
         app:showAsAction="always"/>
 

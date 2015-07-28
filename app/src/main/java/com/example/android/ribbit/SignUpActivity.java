@@ -1,5 +1,6 @@
 package com.example.android.ribbit;
 
+import android.app.ActionBar;
 import android.app.AlertDialog;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
@@ -26,12 +27,16 @@ public class SignUpActivity extends AppCompatActivity {
     protected EditText mHometown;
     protected EditText mWebsite;
     protected Button mSignUpButton;
+    protected Button mCancelButton;
     protected ProgressBar mProgressBar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sign_up);
+
+        android.support.v7.app.ActionBar actionBar = getSupportActionBar();
+        actionBar.hide();
 
         mFirstname = (EditText) findViewById(R.id.firstnameField);
         mLastname = (EditText) findViewById(R.id.lastnameField);
@@ -41,8 +46,16 @@ public class SignUpActivity extends AppCompatActivity {
         mPassword = (EditText) findViewById(R.id.passwordField);
         mEmail = (EditText) findViewById(R.id.emailField);
         mSignUpButton = (Button) findViewById(R.id.signUpButton);
+        mCancelButton = (Button) findViewById(R.id.cancelButton);
         mProgressBar = (ProgressBar) findViewById(R.id.progressBar);
         mProgressBar.setVisibility(View.INVISIBLE);
+
+        mCancelButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
 
         mSignUpButton.setOnClickListener(new View.OnClickListener() {
             @Override
