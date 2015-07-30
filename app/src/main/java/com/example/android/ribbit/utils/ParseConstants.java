@@ -1,4 +1,4 @@
-package com.example.android.ribbit;
+package com.example.android.ribbit.utils;
 
 /**
  * Created by adhyan on 7/7/15.

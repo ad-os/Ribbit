@@ -1,7 +1,7 @@
-package com.example.android.ribbit;
+package com.example.android.ribbit.adapters;
 
 import android.content.Context;
-import android.util.Log;
+import android.text.format.DateUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,12 +9,13 @@ import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.example.android.ribbit.utils.ParseConstants;
+import com.example.android.ribbit.R;
 import com.parse.ParseObject;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
-import java.util.TimeZone;
 import java.util.concurrent.TimeUnit;
 
 /**
@@ -36,8 +37,6 @@ public class MessageAdapter extends ArrayAdapter<ParseObject> {
     public View getView(int position, View convertView, ViewGroup parent) {
 
         ViewHolder holder;
-        Date date;
-        String timeInHours;
 
         if (convertView == null) {
 
@@ -52,40 +51,47 @@ public class MessageAdapter extends ArrayAdapter<ParseObject> {
         }
 
         ParseObject message = mMessages.get(position);
-        date = message.getCreatedAt();
+//        Date date = message.getCreatedAt(); intentionally commented.
+        Date createdAt = message.getCreatedAt();
+        long now = new Date().getTime();
+        String convertDate = DateUtils.getRelativeTimeSpanString(
+                createdAt.getTime(),
+                now,
+                DateUtils.SECOND_IN_MILLIS
+        ).toString();
 
         if (message.getString(ParseConstants.KEY_FILE_TYPE).equals(ParseConstants.TYPE_IMAGE)){
-            holder.iconImageView.setImageResource(R.drawable.ic_action_picture);
+            holder.iconImageView.setImageResource(R.drawable.ic_picture);
         } else {
-            holder.iconImageView.setImageResource(R.drawable.ic_action_play_over_video);
+            holder.iconImageView.setImageResource(R.drawable.ic_video);
         }
         holder.nameLabel.setText(message.getString(ParseConstants.KEY_SENDER_NAME));
-        holder.timeLabel.setText(getTimeInHours(date));
+        holder.timeLabel.setText(convertDate);
         return convertView;
     }
 
-    private String getTimeInHours(Date date) {
-        long startTime = date.getTime();
-        //gets the current system date and time
-        Date endDate = new Date();
-
-        long duration  = endDate.getTime() - startTime;
-        long diffInSeconds = TimeUnit.MILLISECONDS.toSeconds(duration);
-        long diffInMinutes = TimeUnit.MILLISECONDS.toMinutes(duration);
-        long diffInHours = TimeUnit.MILLISECONDS.toHours(duration);
-
-        if (diffInHours > 23) {
-            SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MMMM-dd");
-            return formatter.format(date);
-        }
-        else if (diffInMinutes > 59){
-            return diffInHours + " hrs ago";
-        } else if (diffInSeconds > 59){
-            return diffInMinutes + " minutes ago";
-        } else {
-            return diffInSeconds + " seconds ago";
-        }
-    }
+//    private String getTimeInHours(Date date) {
+//        long startTime = date.getTime();
+//        //gets the current system date and time
+//        Date endDate = new Date();
+//
+//        long duration  = endDate.getTime() - startTime;
+//        long diffInSeconds = TimeUnit.MILLISECONDS.toSeconds(duration);
+//        long diffInMinutes = TimeUnit.MILLISECONDS.toMinutes(duration);
+//        long diffInHours = TimeUnit.MILLISECONDS.toHours(duration);
+//
+//        if (diffInHours > 23) {
+//            SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MMMM-dd");
+//            return formatter.format(date);
+//        }
+//        else if (diffInMinutes > 59){
+//            return diffInHours + " hrs ago";
+//        } else if (diffInSeconds > 59){
+//            return diffInMinutes + " minutes ago";
+//        } else {
+//            return diffInSeconds + " seconds ago";
+//        }
+//    } intentionally commented.
 
     private static class ViewHolder{
         ImageView iconImageView;

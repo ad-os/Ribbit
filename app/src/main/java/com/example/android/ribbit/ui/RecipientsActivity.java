@@ -1,7 +1,6 @@
-package com.example.android.ribbit;
+package com.example.android.ribbit.ui;
 
 import android.app.AlertDialog;
-import android.app.ListActivity;
 import android.net.Uri;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -14,6 +13,9 @@ import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
+import com.example.android.ribbit.utils.FileHelper;
+import com.example.android.ribbit.utils.ParseConstants;
+import com.example.android.ribbit.R;
 import com.parse.FindCallback;
 import com.parse.ParseException;
 import com.parse.ParseFile;
