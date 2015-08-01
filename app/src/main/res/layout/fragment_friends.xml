@@ -4,23 +4,31 @@
                 android:layout_height="match_parent"
                 tools:context=".MainActivity$PlaceholderFragment">
 
-    <ListView
+    <GridView
+        android:id="@+id/friendsGridView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:id="@android:id/list"/>
-    
+        android:clipToPadding="false"
+        android:horizontalSpacing="@dimen/user_grid_spacing"
+        android:numColumns="auto_fit"
+        android:columnWidth="90dp"
+        android:stretchMode="columnWidth"
+        android:verticalSpacing="@dimen/user_grid_spacing"
+        android:gravity="center"
+        android:layout_centerHorizontal="true"/>
+
     <TextView
+        android:id="@android:id/empty"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@android:id/empty"
         android:text="@string/empty_friends_label"/>
 
     <ProgressBar
+        android:id="@+id/progressBar"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/progressBar"
-        android:layout_centerVertical="true"
-        android:layout_centerHorizontal="true"/>
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"/>
 
 
 </RelativeLayout>
