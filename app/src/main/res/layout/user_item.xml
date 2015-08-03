@@ -6,12 +6,16 @@
     
     <ImageView
         android:id="@+id/userImageView"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
         android:src="@drawable/avatar_empty"
         android:contentDescription="@string/content_desc_avatar"
-        android:scaleType="fitXY"
-        android:adjustViewBounds="true"/>
+        style="@style/GridImage"/>
+
+    <ImageView
+        android:id="@+id/checkImageView"
+        android:src="@drawable/avatar_selected"
+        android:contentDescription="@string/content_desc_user_checkmark"
+        style="@style/GridImage"
+        android:visibility="invisible"/>
 
     <TextView
         android:id="@+id/nameLabel"

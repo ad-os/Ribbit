@@ -1,16 +1,12 @@
 package com.example.android.ribbit.ui;
 
 import android.app.AlertDialog;
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.ListFragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
 import android.widget.GridView;
-import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
@@ -41,7 +37,7 @@ public class FriendsFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         //analogous to setContentView method in the Activity.
-        View rootView = inflater.inflate(R.layout.fragment_friends, container, false);
+        View rootView = inflater.inflate(R.layout.user_grid, container, false);
         mProgressBar = (ProgressBar) rootView.findViewById(R.id.progressBar);
         mGridView = (GridView) rootView.findViewById(R.id.friendsGridView);
         mProgressBar.setVisibility(View.INVISIBLE);

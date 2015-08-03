@@ -9,10 +9,14 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.GridView;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.android.ribbit.adapters.UserAdapter;
 import com.example.android.ribbit.utils.FileHelper;
 import com.example.android.ribbit.utils.ParseConstants;
 import com.example.android.ribbit.R;
@@ -37,35 +41,25 @@ public class RecipientsActivity extends AppCompatActivity {
     protected ParseUser mCurrentUser;
     protected List<ParseUser> mFriends;
     protected ProgressBar mProgressBar;
-    protected ListView mFriendsListView;
     protected MenuItem mMenuItem;
     protected Uri mMediaUri;
     protected String mFileType;
+    protected GridView mGridView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_recipients);
-        mFriendsListView = (ListView) findViewById(android.R.id.list);
+        setContentView(R.layout.user_grid);
         mProgressBar = (ProgressBar) findViewById(R.id.progressBar);
+        mGridView = (GridView) findViewById(R.id.friendsGridView);
         mProgressBar.setVisibility(View.INVISIBLE);
         //The below line is used to to get check or uncheck the list Item
-        mFriendsListView.setChoiceMode(ListView.CHOICE_MODE_MULTIPLE);
-
+        mGridView.setChoiceMode(ListView.CHOICE_MODE_MULTIPLE);
+        mGridView.setOnItemClickListener(mOnItemClickListener);
         mMediaUri = getIntent().getData();
         mFileType = getIntent().getStringExtra(ParseConstants.KEY_FILE_TYPE);
-
-        mFriendsListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                if (mFriendsListView.getCheckedItemCount() > 0) {
-                    mMenuItem.setVisible(true);
-                } else {
-                    mMenuItem.setVisible(false);
-                }
-            }
-        });
-
+        TextView emptyTextView = (TextView) findViewById(android.R.id.empty);
+        mGridView.setEmptyView(emptyTextView);
     }
 
     @Override
@@ -92,12 +86,12 @@ public class RecipientsActivity extends AppCompatActivity {
                         usernames[i] = user.getUsername();
                         i++;
                     }
-                    ArrayAdapter<String> adapter = new ArrayAdapter<String>(
-                            RecipientsActivity.this,
-                            android.R.layout.simple_list_item_checked,
-                            usernames
-                    );
-                    mFriendsListView.setAdapter(adapter);
+                    if (mGridView.getAdapter() == null) {
+                        UserAdapter adapter = new UserAdapter(RecipientsActivity.this, mFriends);
+                        mGridView.setAdapter(adapter);
+                    } else {
+                        ((UserAdapter) mGridView.getAdapter()).refill(mFriends);
+                    }
                 } else if (e.getMessage().equals("java.lang.ClassCastException: java.lang.String cannot be cast to org.json.JSONObject")) {
                     //Do nothing since friends are not yet added.
                     //ignore
@@ -182,8 +176,8 @@ public class RecipientsActivity extends AppCompatActivity {
 
     public ArrayList<String> getRecipientIds() {
         ArrayList<String> recipientsIds = new ArrayList<String>();
-        for (int i = 0; i < mFriendsListView.getCount(); i++){
-            if (mFriendsListView.isItemChecked(i)) {
+        for (int i = 0; i < mGridView.getCount(); i++){
+            if (mGridView.isItemChecked(i)) {
                 recipientsIds.add(mFriends.get(i).getObjectId());
             }
         }
@@ -210,4 +204,25 @@ public class RecipientsActivity extends AppCompatActivity {
             }
         });
     }
+
+    protected AdapterView.OnItemClickListener mOnItemClickListener = new AdapterView.OnItemClickListener() {
+        @Override
+        public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+            if (mGridView.getCheckedItemCount() > 0) {
+                mMenuItem.setVisible(true);
+            } else {
+                mMenuItem.setVisible(false);
+            }
+
+            ImageView checkImageView = (ImageView) view.findViewById(R.id.checkImageView);
+
+            if (mGridView.isItemChecked(position)) {
+                //add the Recipient
+                checkImageView.setVisibility(View.VISIBLE);
+            } else {
+                //Remove the recipient.
+                checkImageView.setVisibility(View.INVISIBLE);
+            }
+        }
+    };
 }
