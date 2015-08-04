@@ -23,7 +23,9 @@ import com.example.android.ribbit.R;
 import com.parse.FindCallback;
 import com.parse.ParseException;
 import com.parse.ParseFile;
+import com.parse.ParseInstallation;
 import com.parse.ParseObject;
+import com.parse.ParsePush;
 import com.parse.ParseQuery;
 import com.parse.ParseRelation;
 import com.parse.ParseUser;
@@ -191,6 +193,7 @@ public class RecipientsActivity extends AppCompatActivity {
                 if (e == null){
                     //success
                     Toast.makeText(RecipientsActivity.this, R.string.success_message, Toast.LENGTH_LONG).show();
+                    sendPushNotification();
                 } else {
                     //error
                     AlertDialog.Builder builder = new AlertDialog.Builder(RecipientsActivity.this);
@@ -225,4 +228,16 @@ public class RecipientsActivity extends AppCompatActivity {
             }
         }
     };
+
+    private void sendPushNotification() {
+        ParseQuery<ParseInstallation> query = ParseInstallation.getQuery();
+        query.whereContainedIn(ParseConstants.KEY_USER_ID, getRecipientIds());
+
+        //send push
+        ParsePush push = new ParsePush();
+        push.setQuery(query);
+        push.setMessage(getString(R.string.push_message,
+                ParseUser.getCurrentUser().getUsername()));
+        push.sendInBackground();
+    }
 }

@@ -10,6 +10,7 @@ import android.widget.EditText;
 import android.widget.ProgressBar;
 
 import com.example.android.ribbit.R;
+import com.example.android.ribbit.RibbitApplication;
 import com.parse.ParseException;
 import com.parse.ParseUser;
 import com.parse.SignUpCallback;
@@ -97,6 +98,8 @@ public class SignUpActivity extends AppCompatActivity {
                             mProgressBar.setVisibility(View.INVISIBLE);
                             if (e == null){
                                 //success
+                                RibbitApplication.updateParseInstallation(ParseUser.getCurrentUser());
+
                                 Intent intent = new Intent(SignUpActivity.this, MainActivity.class);
                                 intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                                 intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
